@@ -1,0 +1,11 @@
+/backend/vendor/      # Composer packages
+/backend/node_modules/
+/backend/.env         # Environment file
+
+/mobile/node_modules/
+/mobile/.expo/
+/mobile/.env
+
+.DS_Store
+Thumbs.db
+*.log

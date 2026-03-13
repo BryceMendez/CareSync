@@ -1,11 +1,49 @@
-/backend/vendor/      # Composer packages
+# ----------------------
+# Laravel / PHP
+# ----------------------
+/backend/vendor/          # Composer dependencies
 /backend/node_modules/
-/backend/.env         # Environment file
+/backend/.env             # environment
+/backend/.env.backup
+/backend/.env.production
+/backend/.phpactor.json
+/backend/.phpunit.result.cache
+/backend/.auth.json
+/backend/Homestead.json
+/backend/Homestead.yaml
 
+# ----------------------
+# Laravel storage / logs
+# ----------------------
+/backend/storage/*.key
+/backend/storage/pail
+/backend/storage/*.log
+/backend/storage/framework/*
+/backend/storage/app/public
+/backend/bootstrap/cache/*.php
+
+# ----------------------
+# React Native / Node
+# ----------------------
 /mobile/node_modules/
 /mobile/.expo/
 /mobile/.env
+/mobile/npm-debug.log
+/mobile/yarn-error.log
 
+# ----------------------
+# Public / build folders
+# ----------------------
+/backend/public/build
+/backend/public/hot
+/backend/public/storage
+
+# ----------------------
+# OS / Editor files
+# ----------------------
 .DS_Store
 Thumbs.db
-*.log
+/.vscode
+/.idea
+/.zed
+/.fleet

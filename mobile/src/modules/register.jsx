@@ -27,51 +27,17 @@ export default function Register({ onRegistered, onLogin }) {
 
     setError('');
 
-    // Name
-    if (!name) {
-      setError('Please enter your full name.');
-      return;
-    }
-    if (name.length < 3) {
+    // Validations
+    if (!name || name.length < 3) {
       setError('Name must be at least 3 characters.');
       return;
     }
-
-    // Resident name
-    if (!effectiveResidentName || !effectiveResidentName.trim()) {
-      setError('Please enter the resident\'s name.');
-      return;
-    }
-
-    // Relationship
-    if (!relationship || !relationship.trim()) {
-      setError('Please enter your relationship to the resident.');
-      return;
-    }
-
-    // Email
-    if (!email || !email.trim()) {
-      setError('Please enter your email address.');
-      return;
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
       setError('Please enter a valid email address.');
-      return;
-    }
-
-    // Password
-    if (!password || !password.trim()) {
-      setError('Please enter a password.');
       return;
     }
     if (password.length < 6) {
       setError('Password must be at least 6 characters.');
-      return;
-    }
-
-    // Confirm Password
-    if (!confirmPassword || !confirmPassword.trim()) {
-      setError('Please confirm your password.');
       return;
     }
     if (password !== confirmPassword) {
@@ -79,44 +45,48 @@ export default function Register({ onRegistered, onLogin }) {
       return;
     }
 
-    // Access code (optional, just not empty in this flow)
-    if (!accessCode || !accessCode.trim()) {
-      setError('Please enter the access code.');
-      return;
-    }
-
-    if (!code || !code.trim()) {
-      setError('Verification code is required.');
-      return;
-    }
-
-    // Email
-    if (!email || !email.trim()) {
-      setError('Please enter your email address.');
-      return;
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
-      setError('Please enter a valid email address.');
-      return;
-    }
-
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      const profile = {
-        name: name.trim(),
+
+    // This is the REAL part that talks to your Database
+    fetch('http://192.168.1.8:8000/api/register', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: name,
         email: email.trim(),
-        residentName: effectiveResidentName.trim(),
-        relationship: relationship.trim(),
-      };
+        password: password,
+        resident_name: effectiveResidentName,
+        relationship: relationship,
+      }),
+    })
+    .then(async (response) => {
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || 'Registration failed');
+      }
+      return data;
+    })
+    .then(data => {
+      setLoading(false);
+      console.log('Success! User saved in Database');
+      // If your app uses a function to handle login state, call it
       if (typeof onRegistered === 'function') {
-        onRegistered(profile);
+        onRegistered(data.user);
       } else {
         navigation.replace('Home');
       }
-    }, 800);
+    })
+    .catch(err => {
+      setLoading(false);
+      setError(err.message || 'Could not connect to server.');
+      console.error(err);
+    });
   };
 
+  // THIS PART WAS MISSING:
   return (
     <RegisterScreen
       onComplete={handleRegister}

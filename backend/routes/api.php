@@ -2,12 +2,22 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\AuthController;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
-// Public login route
-Route::post('/login', [AuthController::class, 'login']);
+// Test route (The one that worked on your phone)
+Route::get('/test', function () {
+    return 'API is working';
+});
 
-// Protected route (requires token)
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// The Register Door
+Route::post('/register', function (Request $request) {
+    // This part actually saves to the database
+    $user = User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+    ]);
+
+    return response()->json(['message' => 'User saved!', 'user' => $user], 201);
 });

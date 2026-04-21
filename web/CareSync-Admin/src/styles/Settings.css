@@ -1,0 +1,116 @@
+.settings-page {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px;
+}
+.settings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.settings-saved {
+    padding: 8px 16px;
+    background: #f0fdf4;
+    border: 1px solid #86efac;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #16a34a;
+}
+.settings-layout {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 16px;
+    align-items: flex-start;
+}
+.settings-sidebar {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    position: sticky;
+    top: 24px;
+}
+.settings-tab-btn {
+    width: 100%;
+    text-align: left;
+    padding: 9px 12px;
+    border: none;
+    background: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #475569;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+.settings-tab-btn:hover {
+    background: #f8fafc;
+}
+.settings-tab-btn--active {
+    background: #eff6ff;
+    color: #2563eb;
+    font-weight: 700;
+}
+.settings-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.settings-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.settings-field label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #475569;
+    letter-spacing: 0.06em;
+}
+.settings-field input,
+.settings-field select {
+    padding: 9px 12px;
+    background: #f8fafc;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 9px;
+    font-size: 13px;
+    color: #0f172a;
+    outline: none;
+    transition: border-color 0.15s;
+}
+.settings-field input:focus,
+.settings-field select:focus {
+    border-color: #2563eb;
+}
+.toggle {
+    width: 40px;
+    height: 22px;
+    border-radius: 11px;
+    background: #e2e8f0;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.2s;
+    flex-shrink: 0;
+}
+.toggle--on {
+    background: #2563eb;
+}
+.toggle__knob {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #fff;
+    transition: left 0.2s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+.toggle--on .toggle__knob {
+    left: 21px;
+}

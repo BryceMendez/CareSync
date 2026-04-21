@@ -1,0 +1,369 @@
+/* ── PAGE ───────────────────────────────────────────────────────── */
+.family-page {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px;
+}
+.family-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+/* ── STATS ──────────────────────────────────────────────────────── */
+.family-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+.family-stat {
+    background: #fff;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    transition: box-shadow 0.15s;
+}
+.family-stat:hover {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+/* ── ALERTS ─────────────────────────────────────────────────────── */
+.family-unlinked-alert {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    background: #fffbeb;
+    border: 1px solid #fcd34d;
+    border-radius: 10px;
+}
+
+/* ── TOOLBAR ────────────────────────────────────────────────────── */
+.family-toolbar {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.family-toolbar select {
+    padding: 7px 10px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 12px;
+    color: #334155;
+    background: #f8fafc;
+    outline: none;
+}
+.family-search {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #f8fafc;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 7px 10px;
+    flex: 1;
+    min-width: 180px;
+}
+.family-search input {
+    border: none;
+    background: none;
+    outline: none;
+    font-size: 12px;
+    color: #334155;
+    width: 100%;
+}
+
+/* ── FAMILY ROW LIST ────────────────────────────────────────────── */
+.family-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+.family-row:hover {
+    background: #f8fafc;
+}
+
+/* ── MODAL OVERLAY ──────────────────────────────────────────────── */
+/* Rendered via ReactDOM.createPortal onto document.body so it floats
+   above the sidebar, topbar, and all overflow/transform contexts */
+.family-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(15, 23, 42, 0.52);
+    backdrop-filter: blur(2px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 16px;
+    animation: familyFadeIn 0.15s ease;
+}
+@keyframes familyFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.family-modal {
+    background: #fff;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow:
+        0 24px 64px rgba(0, 0, 0, 0.18),
+        0 4px 16px rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+    animation: familySlideUp 0.22s cubic-bezier(0.34, 1.3, 0.64, 1);
+    scrollbar-width: none;          /* Firefox */
+    -ms-overflow-style: none;
+}
+@keyframes familySlideUp {
+    from {
+        transform: translateY(16px) scale(0.97);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+.family-modal::-webkit-scrollbar {
+    display: none;                  /* Chrome, Safari, Opera */
+}
+
+/* Accent stripe */
+.family-modal__stripe {
+    height: 5px;
+    border-radius: 20px 20px 0 0;
+    flex-shrink: 0;
+}
+
+/* Sticky header */
+.family-modal__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px 12px;
+    border-bottom: 1px solid #f1f5f9;
+    position: sticky;
+    top: 0;
+    background: #fff;
+    z-index: 1;
+}
+.family-modal__header-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #64748b;
+    letter-spacing: 0.05em;
+}
+.family-modal__close {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1.5px solid #e2e8f0;
+    background: #f8fafc;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    color: #64748b;
+    transition: background 0.15s;
+    line-height: 1;
+}
+.family-modal__close:hover {
+    background: #f1f5f9;
+    color: #0f172a;
+}
+
+/* Body */
+.family-modal__body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Identity hero */
+.family-modal__identity {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0 4px;
+}
+.family-modal__name {
+    font-size: 18px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0;
+    text-align: center;
+}
+.family-modal__id {
+    font-size: 11px;
+    color: #94a3b8;
+    font-family: monospace;
+}
+.family-modal__badges {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Alert strip */
+.family-modal__alert-strip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    background: #fffbeb;
+    border: 1px solid #fcd34d;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #b45309;
+}
+
+/* Info grid */
+.family-modal__info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+.family-modal__field {
+    background: #f8fafc;
+    border: 1px solid #e8edf4;
+    border-radius: 10px;
+    padding: 9px 12px;
+}
+.family-modal__field-label {
+    font-size: 9px;
+    font-weight: 700;
+    color: #94a3b8;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+}
+.family-modal__field-value {
+    font-size: 12px;
+    font-weight: 700;
+    color: #0f172a;
+    word-break: break-all;
+}
+
+/* Section label */
+.family-modal__section-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #94a3b8;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+/* Member card */
+.family-modal__member {
+    background: #f8fafc;
+    border: 1px solid #e8edf4;
+    border-radius: 10px;
+    padding: 10px 12px;
+}
+
+/* Actions */
+.family-modal__actions {
+    display: flex;
+    gap: 8px;
+    padding-top: 2px;
+}
+
+/* Invite form fields (inside invite modal body) */
+.family-modal__form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.family-modal__form-field label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #475569;
+    letter-spacing: 0.06em;
+}
+.family-modal__form-field input,
+.family-modal__form-field select {
+    padding: 9px 12px;
+    background: #f8fafc;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 9px;
+    font-size: 13px;
+    color: #0f172a;
+    outline: none;
+    transition: border-color 0.15s;
+}
+.family-modal__form-field input:focus,
+.family-modal__form-field select:focus {
+    border-color: #93c5fd;
+}
+
+/* ── RESPONSIVE ─────────────────────────────────────────────────── */
+@media (max-width: 700px) {
+    .family-page {
+        padding: 12px;
+        gap: 12px;
+    }
+    .family-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+    .family-toolbar {
+        gap: 8px;
+    }
+    .family-search {
+        min-width: 100%;
+        order: -1;
+    }
+    .family-modal {
+        max-height: 95vh;
+        border-radius: 20px 20px 0 0;
+        max-width: 100%;
+    }
+    .family-modal-overlay {
+        align-items: flex-end;
+        padding: 0;
+    }
+    .family-modal__info-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    .family-modal__actions {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 420px) {
+    .family-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .family-modal__info-grid {
+        grid-template-columns: 1fr;
+    }
+}

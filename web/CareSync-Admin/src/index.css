@@ -1,0 +1,454 @@
+/* ── GOOGLE FONTS ─────────────────────────────────────────────────── */
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap");
+
+/* ── DESIGN TOKENS ────────────────────────────────────────────────── */
+:root {
+  --cs-font: "Plus Jakarta Sans", system-ui, sans-serif;
+  --cs-font-mono: "JetBrains Mono", monospace;
+
+  --cs-bg: #f0f6ff;
+  --cs-bg-alt: #e8f1fc;
+  --cs-surface: #ffffff;
+  --cs-surface-soft: #f7fbff;
+
+  --cs-primary: #2563eb;
+  --cs-primary-hov: #1d4ed8;
+  --cs-primary-50: #eff6ff;
+  --cs-primary-100: #dbeafe;
+  --cs-primary-200: #bfdbfe;
+  --cs-primary-300: #93c5fd;
+
+  --cs-border: #dde8f8;
+  --cs-border-mid: #c8daff;
+  --cs-border-strong: #a5c3f7;
+
+  --cs-text: #0f172a;
+  --cs-text-sec: #475569;
+  --cs-text-muted: #94a3b8;
+  --cs-text-light: #cbd5e1;
+
+  --cs-red: #ef4444;
+  --cs-amber: #f59e0b;
+  --cs-green: #10b981;
+
+  --cs-radius-sm: 8px;
+  --cs-radius: 12px;
+  --cs-radius-lg: 16px;
+
+  --cs-shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --cs-shadow-sm: 0 2px 6px rgba(15, 23, 42, 0.06);
+  --cs-shadow-md: 0 4px 16px rgba(37, 99, 235, 0.1);
+  --cs-shadow-lg: 0 12px 32px rgba(37, 99, 235, 0.15);
+
+  --cs-ring: 0 0 0 4px rgba(37, 99, 235, 0.12);
+  --cs-ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── GLOBAL RESET ─────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  background: #f0f6ff;
+  color: #0f172a;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* ── FORM ELEMENTS ────────────────────────────────────────────────── */
+input,
+select,
+textarea,
+button {
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  color-scheme: light;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ── SCROLLBARS ───────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f0f6ff;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #bfdbfe;
+  border-radius: 3px;
+}
+
+/* ── ANIMATIONS ───────────────────────────────────────────────────── */
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ── UNIFIED TOOLBAR (search + add) ──────────────────────────────── */
+.cs-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.cs-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1 1 360px;
+  min-width: 280px;
+  height: 48px;
+  background: var(--cs-surface-soft);
+  border: 1.5px solid var(--cs-border);
+  border-radius: 14px;
+  padding: 4px 5px 4px 18px;
+  transition: border-color 0.18s var(--cs-ease),
+    background 0.18s var(--cs-ease), box-shadow 0.18s var(--cs-ease);
+  box-shadow: var(--cs-shadow-xs);
+}
+
+.cs-search:hover {
+  border-color: var(--cs-border-mid);
+}
+
+.cs-search:focus-within {
+  border-color: var(--cs-primary-300);
+  background: var(--cs-surface);
+  box-shadow: var(--cs-ring), var(--cs-shadow-xs);
+}
+
+.cs-search__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  margin-right: 12px;
+  color: var(--cs-text-muted);
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+.cs-search__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.cs-search__input {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--cs-font);
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  color: var(--cs-text);
+  padding: 0;
+}
+
+.cs-search__input::placeholder {
+  color: var(--cs-text-muted);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.cs-search__clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  margin-right: 6px;
+  border: none;
+  background: transparent;
+  color: var(--cs-text-muted);
+  font-size: 13px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: color 0.15s var(--cs-ease), background 0.15s var(--cs-ease);
+}
+
+.cs-search__clear:hover {
+  color: var(--cs-red);
+  background: #fef2f2;
+}
+
+.cs-search__divider {
+  width: 1px;
+  height: 24px;
+  background: var(--cs-border);
+  margin: 0 8px 0 4px;
+  flex-shrink: 0;
+}
+
+/* Embedded view toggle inside the search bar */
+.cs-search__views {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  margin-right: 4px;
+  padding: 3px;
+  background: rgba(37, 99, 235, 0.07);
+  border-radius: 9px;
+  flex-shrink: 0;
+}
+
+.cs-search__view-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-width: 34px;
+  height: 32px;
+  padding: 0 10px;
+  border: none;
+  background: transparent;
+  color: var(--cs-text-sec);
+  font-family: var(--cs-font);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: color 0.15s var(--cs-ease), background 0.15s var(--cs-ease),
+    box-shadow 0.15s var(--cs-ease);
+  white-space: nowrap;
+}
+
+.cs-search__view-btn:hover {
+  color: var(--cs-primary);
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.cs-search__view-btn--active {
+  background: linear-gradient(135deg, var(--cs-primary), var(--cs-primary-hov));
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.35);
+}
+
+.cs-search__view-btn--active:hover {
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--cs-primary), var(--cs-primary-hov));
+}
+
+.cs-search__view-icon {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.cs-search__add,
+.cs-toolbar__add {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 44px;
+  padding: 0 20px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--cs-primary), var(--cs-primary-hov));
+  color: #ffffff;
+  font-family: var(--cs-font);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(37, 99, 235, 0.32);
+  transition: transform 0.18s var(--cs-ease), box-shadow 0.18s var(--cs-ease),
+    filter 0.18s var(--cs-ease);
+}
+
+.cs-search__add:hover,
+.cs-toolbar__add:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.42);
+  filter: brightness(1.05);
+}
+
+.cs-search__add:active,
+.cs-toolbar__add:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.32);
+}
+
+.cs-toolbar__add {
+  margin-left: auto;
+}
+
+.cs-search__add-plus {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+/* Filter selects — unified */
+.cs-filter-select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  height: 44px;
+  padding: 0 38px 0 16px;
+  border: 1.5px solid var(--cs-border);
+  border-radius: 12px;
+  background-color: var(--cs-surface);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  font-family: var(--cs-font);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--cs-text-sec);
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  min-width: 140px;
+  transition: border-color 0.15s var(--cs-ease),
+    box-shadow 0.15s var(--cs-ease);
+  box-shadow: var(--cs-shadow-xs);
+}
+
+.cs-filter-select:hover {
+  border-color: var(--cs-border-mid);
+}
+
+.cs-filter-select:focus {
+  outline: none;
+  border-color: var(--cs-primary-300);
+  box-shadow: var(--cs-ring);
+}
+
+.cs-result-count {
+  font-family: var(--cs-font);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--cs-text-muted);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  margin-left: auto;
+  padding: 0 6px;
+}
+
+/* ── Compact variant (fits on one line) ─────────────────────────── */
+.cs-toolbar--compact {
+  flex-wrap: nowrap;
+  gap: 10px;
+}
+
+.cs-search--compact {
+  height: 42px;
+  flex: 1 1 220px;
+  min-width: 180px;
+  padding: 4px 5px 4px 14px;
+  border-radius: 12px;
+}
+
+.cs-search--compact .cs-search__input {
+  font-size: 12.5px;
+}
+
+.cs-search--compact .cs-search__icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+}
+
+.cs-filter-select--compact {
+  height: 42px;
+  min-width: 0;
+  padding: 0 32px 0 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  background-position: right 10px center;
+  flex: 0 1 auto;
+}
+
+.cs-toolbar__add--compact {
+  height: 42px;
+  padding: 0 16px;
+  font-size: 12px;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+@media (max-width: 720px) {
+  .cs-search {
+    flex: 1 1 100%;
+  }
+  .cs-search__add {
+    padding: 0 14px;
+  }
+  .cs-result-count {
+    margin-left: 0;
+  }
+  .cs-toolbar--compact {
+    flex-wrap: wrap;
+  }
+}

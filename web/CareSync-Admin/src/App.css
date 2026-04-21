@@ -1,0 +1,342 @@
+/* ── APP LAYOUT ───────────────────────────────────────────────────── */
+.app-layout {
+    display: flex;
+    height: 100vh;
+    background: #f0f6ff;
+    overflow: hidden;
+}
+
+.app-main {
+    flex: 1;
+    margin-left: 236px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-width: 0;
+    transition: margin-left 0.3s ease;
+}
+
+.app-content {
+    flex: 1;
+    overflow-y: auto;
+    background: #f0f6ff;
+    scrollbar-width: thin;
+    scrollbar-color: #bfdbfe #f0f6ff;
+}
+
+.app-content::-webkit-scrollbar {
+    width: 5px;
+}
+
+.app-content::-webkit-scrollbar-track {
+    background: #f0f6ff;
+}
+
+.app-content::-webkit-scrollbar-thumb {
+    background: #bfdbfe;
+    border-radius: 3px;
+}
+
+/* ── TOP BAR ──────────────────────────────────────────────────────── */
+.topbar {
+    height: 58px;
+    background: #ffffff;
+    border-bottom: 1px solid #dde8f8;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    flex-shrink: 0;
+    box-shadow: 0 1px 4px rgba(59, 130, 246, 0.06);
+    z-index: 10;
+}
+
+.topbar__left {
+}
+
+.topbar__title {
+    font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+    font-size: 17px;
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.topbar__sub {
+    font-size: 11px;
+    color: #94a3b8;
+    margin-top: 1px;
+    font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+}
+
+.topbar__right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Hamburger button — hidden on desktop */
+.topbar__hamburger {
+    display: none;
+    background: #f0f6ff;
+    border: 1px solid #dde8f8;
+    border-radius: 9px;
+    width: 34px;
+    height: 34px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+    padding: 0;
+    flex-shrink: 0;
+}
+
+.topbar__hamburger span {
+    display: block;
+    width: 16px;
+    height: 2px;
+    background: #475569;
+    border-radius: 2px;
+    transition: all 0.2s;
+}
+
+/* Search */
+.topbar__search {
+    position: relative;
+}
+
+.topbar__search-icon {
+    position: absolute;
+    left: 9px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: #94a3b8;
+    pointer-events: none;
+}
+
+.topbar__search-input {
+    padding: 6px 12px 6px 28px;
+    background: #f0f6ff;
+    border: 1px solid #dde8f8;
+    border-radius: 8px;
+    font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+    font-size: 12px;
+    color: #0f172a;
+    outline: none;
+    width: 200px;
+    transition: border-color 0.15s;
+}
+
+.topbar__search-input:focus {
+    border-color: #60a5fa;
+}
+
+/* Bell */
+.topbar__bell {
+    position: relative;
+    cursor: pointer;
+}
+
+.topbar__bell-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    background: #f0f6ff;
+    border: 1px solid #dde8f8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+}
+
+.topbar__bell-badge {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #ef4444;
+    border: 2px solid #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 8px;
+    font-weight: 700;
+    color: white;
+}
+
+/* Time */
+.topbar__time {
+    background: #f0f6ff;
+    border: 1px solid #dde8f8;
+    border-radius: 8px;
+    padding: 5px 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.topbar__time-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 6px #10b981;
+    flex-shrink: 0;
+}
+
+.topbar__time-text {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: #475569;
+}
+
+/* Avatar */
+.topbar__avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    background: rgba(37, 99, 235, 0.12);
+    border: 1.5px solid rgba(37, 99, 235, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: #2563eb;
+    cursor: pointer;
+}
+
+/* Sidebar overlay — hidden on desktop */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.4);
+    z-index: 40;
+    backdrop-filter: blur(2px);
+}
+
+/* ── COMING SOON PLACEHOLDER ──────────────────────────────────────── */
+.coming-soon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 24px;
+    text-align: center;
+}
+
+.coming-soon__icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.coming-soon__title {
+    font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 10px;
+}
+
+.coming-soon__sub {
+    font-size: 14px;
+    color: #94a3b8;
+    line-height: 1.6;
+}
+
+.coming-soon__sub code {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 13px;
+    color: #2563eb;
+}
+
+/* ── TABLET (max 1024px) ──────────────────────────────────────────── */
+@media (max-width: 1024px) {
+    .app-main {
+        margin-left: 236px;
+    }
+
+    .topbar__time-text {
+        display: none;
+    }
+}
+
+/* ── MOBILE (max 768px) ───────────────────────────────────────────── */
+@media (max-width: 768px) {
+    .app-layout {
+        overflow: visible;
+    }
+
+    /* Sidebar becomes a fixed off-screen drawer */
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 50;
+        box-shadow: none;
+    }
+
+    /* When open, slide in */
+    .sidebar--open {
+        transform: translateX(0);
+        box-shadow: 4px 0 24px rgba(37, 99, 235, 0.15);
+    }
+
+    /* Overlay visible when sidebar is open */
+    .sidebar-overlay--open {
+        display: block;
+    }
+
+    /* Main content takes full width */
+    .app-main {
+        margin-left: 0;
+    }
+
+    /* Topbar */
+    .topbar {
+        padding: 0 14px;
+    }
+
+    .topbar__hamburger {
+        display: flex;
+    }
+
+    .topbar__title {
+        font-size: 14px;
+    }
+
+    .topbar__sub {
+        display: none;
+    }
+
+    .topbar__time {
+        padding: 5px 8px;
+    }
+
+    .topbar__time-text {
+        display: none;
+    }
+}
+
+/* ── SMALL MOBILE (max 480px) ─────────────────────────────────────── */
+@media (max-width: 480px) {
+    .topbar {
+        padding: 0 10px;
+        gap: 8px;
+    }
+
+    .topbar__avatar {
+        width: 28px;
+        height: 28px;
+        font-size: 10px;
+    }
+}

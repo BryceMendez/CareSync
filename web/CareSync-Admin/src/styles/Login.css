@@ -1,0 +1,399 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap");
+
+/* ── WRAPPER ──────────────────────────────────────────────────────── */
+.login-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: "DM Sans", system-ui, sans-serif;
+    background: linear-gradient(135deg, #f0f6ff 0%, #dbeafe 100%);
+    position: relative;
+    overflow: hidden;
+    padding: 24px;
+}
+
+/* ── BLOBS ────────────────────────────────────────────────────────── */
+.login-blob {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.login-blob--tl {
+    top: -100px;
+    left: -100px;
+    width: 380px;
+    height: 380px;
+    background: rgba(191, 219, 254, 0.55);
+}
+
+.login-blob--br {
+    bottom: -80px;
+    right: -60px;
+    width: 280px;
+    height: 280px;
+    background: rgba(147, 197, 253, 0.3);
+}
+
+.login-blob--mid {
+    top: 50%;
+    left: 5%;
+    width: 140px;
+    height: 140px;
+    background: #dbeafe;
+    border: 1px solid #bfdbfe;
+    transform: translateY(-50%);
+}
+
+.login-blob--tr {
+    top: -40px;
+    right: 15%;
+    width: 180px;
+    height: 180px;
+    background: rgba(219, 234, 254, 0.5);
+}
+
+/* ── LOGO ─────────────────────────────────────────────────────────── */
+.login-logo {
+    margin-bottom: -45px;
+    margin-top: -90px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.login-logo img {
+    height: 200px;
+    width: auto;
+    object-fit: contain;
+    max-width: 100%;
+}
+
+/* ── CARD ─────────────────────────────────────────────────────────── */
+.login-card {
+    width: 100%;
+    max-width: 400px;
+    background: #ffffff;
+    border: 1px solid #e4eaf4;
+    border-radius: 16px;
+    padding: 32px 32px 28px;
+    box-shadow: 0 2px 16px rgba(20, 50, 100, 0.06);
+    position: relative;
+    z-index: 1;
+}
+
+/* ── HEADLINE ─────────────────────────────────────────────────────── */
+.login-headline {
+    margin-bottom: 24px;
+}
+
+.login-headline__title {
+    font-size: 22px;
+    font-weight: 600;
+    color: #0f172a;
+    margin: 0 0 4px;
+    letter-spacing: -0.3px;
+}
+
+.login-headline__desc {
+    font-size: 13px;
+    color: #64748b;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* ── FORM FIELDS ──────────────────────────────────────────────────── */
+.login-field {
+    margin-bottom: 14px;
+}
+
+.login-field label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    color: #64748b;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+}
+
+.login-field input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #dde6f0;
+    border-radius: 8px;
+    font-family: "DM Sans", system-ui, sans-serif;
+    font-size: 14px;
+    color: #0f172a;
+    background: #f8fafd;
+    outline: none;
+    transition:
+        border-color 0.15s,
+        box-shadow 0.15s;
+    box-sizing: border-box;
+}
+
+.login-field input::placeholder {
+    color: #a8b8cc;
+}
+
+.login-field input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    background: #fff;
+}
+
+/* ── OPTIONS ROW ──────────────────────────────────────────────────── */
+.login-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 4px 0 20px;
+}
+
+.login-remember {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    color: #64748b;
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+}
+
+.login-remember input[type="checkbox"] {
+    accent-color: #2563eb;
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+}
+
+.login-forgot {
+    background: none;
+    border: none;
+    color: #2563eb;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: "DM Sans", system-ui, sans-serif;
+    padding: 0;
+    transition: color 0.15s;
+}
+
+.login-forgot:hover {
+    color: #1d4ed8;
+    text-decoration: underline;
+}
+
+/* ── SUBMIT BUTTON ────────────────────────────────────────────────── */
+.login-btn {
+    width: 100%;
+    padding: 11px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-family: "DM Sans", system-ui, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.01em;
+    transition:
+        background 0.15s,
+        transform 0.1s;
+}
+
+.login-btn:hover {
+    background: #1d4ed8;
+}
+
+.login-btn:active {
+    transform: scale(0.99);
+}
+
+/* ── AUDIT NOTICE ─────────────────────────────────────────────────── */
+.login-audit {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-top: 20px;
+    padding: 10px 12px;
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-radius: 8px;
+}
+
+.login-audit__icon {
+    font-size: 13px;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.login-audit__text {
+    font-size: 11px;
+    color: #92400e;
+    line-height: 1.5;
+}
+
+/* ── BADGES ───────────────────────────────────────────────────────── */
+.login-badges {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.login-badge {
+    font-size: 11px;
+    color: #64748b;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 99px;
+    padding: 3px 10px;
+    font-weight: 500;
+}
+
+/* ── FOOTER ───────────────────────────────────────────────────────── */
+.login-footer {
+    margin-top: 14px;
+    font-size: 11px;
+    color: #94a3b8;
+    text-align: center;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+}
+
+.login-footer a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.login-footer a:hover {
+    text-decoration: underline;
+}
+
+/* ── ERROR BANNER ─────────────────────────────────────────────────── */
+.login-error {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 14px;
+    padding: 10px 12px;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    animation: shake 0.35s ease;
+}
+
+.login-error__icon {
+    font-size: 13px;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.login-error__text {
+    font-size: 12px;
+    color: #991b1b;
+    line-height: 1.5;
+    font-weight: 500;
+}
+
+/* Shake animation on error */
+@keyframes shake {
+    0% {
+        transform: translateX(0);
+    }
+    20% {
+        transform: translateX(-6px);
+    }
+    40% {
+        transform: translateX(6px);
+    }
+    60% {
+        transform: translateX(-4px);
+    }
+    80% {
+        transform: translateX(4px);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+/* Red border on fields when there's an error */
+.login-field input.input--error {
+    border-color: #fca5a5;
+    background: #fff5f5;
+}
+
+.login-field input.input--error:focus {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+/* ── LOADING STATE ────────────────────────────────────────────────── */
+.login-btn--loading {
+    background: #93c5fd;
+    cursor: not-allowed;
+}
+
+.login-btn--loading:hover {
+    background: #93c5fd;
+}
+
+
+/* ── Add these to your existing Login.css ── */
+
+.register-section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: #94a3b8;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    margin-top: 4px;
+}
+
+.register-divider {
+    height: 1px;
+    background: #e8eef7;
+    margin: 6px 0 18px;
+}
+
+.register-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.register-select {
+    width: 100%;
+    padding: 9px 12px;
+    background: #f8fafc;
+    border: 1.5px solid #dde5f0;
+    border-radius: 9px;
+    color: #0f2240;
+    font-size: 13px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.15s;
+    appearance: auto;
+}
+
+.register-select:focus {
+    border-color: #3b82f6;
+    background: #fff;
+}
+
+.register-select.input--error {
+    border-color: #ef4444;
+}

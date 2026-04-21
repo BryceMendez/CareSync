@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(wc -l \"c:/Users/Ken/SysarchProject/CareSync/web/CareSync-Admin/src/components/\"*.jsx \"c:/Users/Ken/SysarchProject/CareSync/web/CareSync-Admin/src/styles/\"*.css)"
+    ]
+  }
+}

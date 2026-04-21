@@ -4,6 +4,7 @@
     flex-direction: column;
     gap: 16px;
     padding: 24px;
+    font-family: var(--cs-font);
 }
 .family-header {
     display: flex;
@@ -18,17 +19,22 @@
     gap: 12px;
 }
 .family-stat {
-    background: #fff;
-    border-radius: 10px;
-    border: 1px solid #e2e8f0;
+    background: var(--cs-surface);
+    border-radius: var(--cs-radius);
+    border: 1px solid var(--cs-border);
     padding: 14px 16px;
     display: flex;
     flex-direction: column;
     gap: 4px;
-    transition: box-shadow 0.15s;
+    box-shadow: var(--cs-shadow-xs);
+    transition: box-shadow var(--cs-duration-md) var(--cs-ease),
+                border-color var(--cs-duration-md) var(--cs-ease),
+                transform var(--cs-duration-md) var(--cs-ease);
 }
 .family-stat:hover {
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    box-shadow: var(--cs-shadow-sm);
+    border-color: var(--cs-border-mid);
+    transform: translateY(-1px);
 }
 
 /* ── ALERTS ─────────────────────────────────────────────────────── */
@@ -37,9 +43,11 @@
     align-items: center;
     gap: 10px;
     padding: 12px 16px;
-    background: #fffbeb;
-    border: 1px solid #fcd34d;
-    border-radius: 10px;
+    background: var(--cs-amber-soft);
+    border: 1px solid var(--cs-amber-border);
+    border-radius: var(--cs-radius-sm);
+    font-family: var(--cs-font);
+    line-height: 1.4;
 }
 
 /* ── TOOLBAR ────────────────────────────────────────────────────── */
@@ -51,30 +59,46 @@
 }
 .family-toolbar select {
     padding: 7px 10px;
-    border: 1.5px solid #e2e8f0;
-    border-radius: 8px;
+    border: 1.5px solid var(--cs-border);
+    border-radius: var(--cs-radius-sm);
     font-size: 12px;
-    color: #334155;
-    background: #f8fafc;
+    font-family: var(--cs-font);
+    color: var(--cs-text-sec);
+    background: var(--cs-surface-soft);
     outline: none;
+    cursor: pointer;
+    transition: border-color var(--cs-duration) var(--cs-ease),
+                box-shadow var(--cs-duration) var(--cs-ease);
+}
+.family-toolbar select:focus {
+    border-color: var(--cs-primary-300);
+    box-shadow: var(--cs-ring);
 }
 .family-search {
     display: flex;
     align-items: center;
     gap: 6px;
-    background: #f8fafc;
-    border: 1.5px solid #e2e8f0;
-    border-radius: 8px;
+    background: var(--cs-surface-soft);
+    border: 1.5px solid var(--cs-border);
+    border-radius: var(--cs-radius-sm);
     padding: 7px 10px;
     flex: 1;
     min-width: 180px;
+    transition: border-color var(--cs-duration) var(--cs-ease),
+                box-shadow var(--cs-duration) var(--cs-ease);
+}
+.family-search:focus-within {
+    border-color: var(--cs-primary-300);
+    box-shadow: var(--cs-ring);
+    background: var(--cs-surface);
 }
 .family-search input {
     border: none;
     background: none;
     outline: none;
     font-size: 12px;
-    color: #334155;
+    font-family: var(--cs-font);
+    color: var(--cs-text-sec);
     width: 100%;
 }
 
@@ -85,70 +109,51 @@
     gap: 12px;
     padding: 14px 16px;
     cursor: pointer;
-    transition: background 0.15s;
+    border-bottom: 1px solid var(--cs-border);
+    transition: background var(--cs-duration) var(--cs-ease);
+}
+.family-row:last-child {
+    border-bottom: none;
 }
 .family-row:hover {
-    background: #f8fafc;
+    background: var(--cs-surface-soft);
+}
+.family-row:active {
+    background: var(--cs-primary-50);
 }
 
 /* ── MODAL OVERLAY ──────────────────────────────────────────────── */
-/* Rendered via ReactDOM.createPortal onto document.body so it floats
-   above the sidebar, topbar, and all overflow/transform contexts */
 .family-modal-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100vw;
-    height: 100vh;
+    inset: 0;
     background: rgba(15, 23, 42, 0.52);
-    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 9999;
+    z-index: var(--z-modal);
     padding: 16px;
-    animation: familyFadeIn 0.15s ease;
-}
-@keyframes familyFadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+    animation: fadeIn var(--cs-duration) var(--cs-ease);
 }
 
 .family-modal {
-    background: #fff;
+    background: var(--cs-surface);
     border-radius: 20px;
     width: 100%;
     max-width: 500px;
     max-height: 90vh;
     overflow-y: auto;
-    box-shadow:
-        0 24px 64px rgba(0, 0, 0, 0.18),
-        0 4px 16px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 24px 64px rgba(15, 23, 42, 0.18),
+                0 4px 16px rgba(15, 23, 42, 0.06);
     display: flex;
     flex-direction: column;
-    animation: familySlideUp 0.22s cubic-bezier(0.34, 1.3, 0.64, 1);
-    scrollbar-width: none;          /* Firefox */
+    animation: scaleIn 0.24s cubic-bezier(0.34, 1.3, 0.64, 1);
+    scrollbar-width: none;
     -ms-overflow-style: none;
 }
-@keyframes familySlideUp {
-    from {
-        transform: translateY(16px) scale(0.97);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0) scale(1);
-        opacity: 1;
-    }
-}
-
 .family-modal::-webkit-scrollbar {
-    display: none;                  /* Chrome, Safari, Opera */
+    display: none;
 }
 
 /* Accent stripe */
@@ -164,36 +169,49 @@
     justify-content: space-between;
     align-items: center;
     padding: 16px 20px 12px;
-    border-bottom: 1px solid #f1f5f9;
+    border-bottom: 1px solid var(--cs-border);
     position: sticky;
     top: 0;
-    background: #fff;
+    background: var(--cs-surface);
     z-index: 1;
 }
 .family-modal__header-title {
     font-size: 14px;
     font-weight: 700;
-    color: #64748b;
+    color: var(--cs-text-sec);
     letter-spacing: 0.05em;
+    font-family: var(--cs-font);
 }
 .family-modal__close {
     width: 32px;
     height: 32px;
     border-radius: 8px;
-    border: 1.5px solid #e2e8f0;
-    background: #f8fafc;
+    border: 1.5px solid var(--cs-border);
+    background: var(--cs-surface-soft);
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 15px;
-    color: #64748b;
-    transition: background 0.15s;
+    color: var(--cs-text-sec);
     line-height: 1;
+    transition: background var(--cs-duration) var(--cs-ease),
+                color var(--cs-duration) var(--cs-ease),
+                border-color var(--cs-duration) var(--cs-ease),
+                transform var(--cs-duration) var(--cs-ease);
 }
 .family-modal__close:hover {
-    background: #f1f5f9;
-    color: #0f172a;
+    background: var(--cs-red-soft);
+    color: var(--cs-red);
+    border-color: var(--cs-red-border);
+    transform: rotate(90deg);
+}
+.family-modal__close:active {
+    transform: rotate(90deg) scale(0.92);
+}
+.family-modal__close:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15);
 }
 
 /* Body */
@@ -215,14 +233,16 @@
 .family-modal__name {
     font-size: 18px;
     font-weight: 800;
-    color: #0f172a;
+    color: var(--cs-text);
     margin: 0;
     text-align: center;
+    font-family: var(--cs-font);
+    line-height: 1.2;
 }
 .family-modal__id {
     font-size: 11px;
-    color: #94a3b8;
-    font-family: monospace;
+    color: var(--cs-text-muted);
+    font-family: var(--cs-font-mono);
 }
 .family-modal__badges {
     display: flex;
@@ -237,12 +257,14 @@
     align-items: center;
     gap: 8px;
     padding: 10px 14px;
-    background: #fffbeb;
-    border: 1px solid #fcd34d;
+    background: var(--cs-amber-soft);
+    border: 1px solid var(--cs-amber-border);
     border-radius: 10px;
     font-size: 12px;
     font-weight: 600;
     color: #b45309;
+    font-family: var(--cs-font);
+    line-height: 1.4;
 }
 
 /* Info grid */
@@ -252,42 +274,54 @@
     gap: 8px;
 }
 .family-modal__field {
-    background: #f8fafc;
-    border: 1px solid #e8edf4;
+    background: var(--cs-surface-soft);
+    border: 1px solid var(--cs-border);
     border-radius: 10px;
     padding: 9px 12px;
+    transition: border-color var(--cs-duration) var(--cs-ease);
+}
+.family-modal__field:hover {
+    border-color: var(--cs-border-mid);
 }
 .family-modal__field-label {
     font-size: 9px;
     font-weight: 700;
-    color: #94a3b8;
+    color: var(--cs-text-muted);
     letter-spacing: 0.1em;
     text-transform: uppercase;
     margin-bottom: 3px;
+    font-family: var(--cs-font);
 }
 .family-modal__field-value {
     font-size: 12px;
     font-weight: 700;
-    color: #0f172a;
+    color: var(--cs-text);
     word-break: break-all;
+    font-family: var(--cs-font);
+    line-height: 1.4;
 }
 
 /* Section label */
 .family-modal__section-label {
     font-size: 10px;
     font-weight: 700;
-    color: #94a3b8;
+    color: var(--cs-text-muted);
     letter-spacing: 0.1em;
     text-transform: uppercase;
     margin-bottom: 10px;
+    font-family: var(--cs-font);
 }
 
 /* Member card */
 .family-modal__member {
-    background: #f8fafc;
-    border: 1px solid #e8edf4;
+    background: var(--cs-surface-soft);
+    border: 1px solid var(--cs-border);
     border-radius: 10px;
     padding: 10px 12px;
+    transition: border-color var(--cs-duration) var(--cs-ease);
+}
+.family-modal__member:hover {
+    border-color: var(--cs-border-mid);
 }
 
 /* Actions */
@@ -297,7 +331,7 @@
     padding-top: 2px;
 }
 
-/* Invite form fields (inside invite modal body) */
+/* Invite form fields */
 .family-modal__form-field {
     display: flex;
     flex-direction: column;
@@ -306,23 +340,72 @@
 .family-modal__form-field label {
     font-size: 11px;
     font-weight: 700;
-    color: #475569;
+    color: var(--cs-text-sec);
     letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-family: var(--cs-font);
 }
 .family-modal__form-field input,
 .family-modal__form-field select {
     padding: 9px 12px;
-    background: #f8fafc;
-    border: 1.5px solid #e2e8f0;
+    background: var(--cs-surface-soft);
+    border: 1.5px solid var(--cs-border);
     border-radius: 9px;
     font-size: 13px;
-    color: #0f172a;
+    font-family: var(--cs-font);
+    color: var(--cs-text);
     outline: none;
-    transition: border-color 0.15s;
+    transition: border-color var(--cs-duration) var(--cs-ease),
+                box-shadow var(--cs-duration) var(--cs-ease),
+                background var(--cs-duration) var(--cs-ease);
+    line-height: 1.5;
 }
 .family-modal__form-field input:focus,
 .family-modal__form-field select:focus {
-    border-color: #93c5fd;
+    border-color: var(--cs-primary-300);
+    box-shadow: var(--cs-ring);
+    background: var(--cs-surface);
+}
+
+/* ── FAMILY GRID CARDS ──────────────────────────────────────────── */
+.family-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+}
+
+.family-card {
+    background: var(--cs-surface);
+    border-radius: var(--cs-radius);
+    border: 1px solid var(--cs-border);
+    padding: 14px;
+    cursor: pointer;
+    box-shadow: var(--cs-shadow-xs);
+    transition: box-shadow var(--cs-duration-md) var(--cs-ease),
+                border-color var(--cs-duration-md) var(--cs-ease),
+                transform var(--cs-duration-md) var(--cs-ease);
+}
+
+.family-card:hover {
+    box-shadow: var(--cs-shadow-md);
+    border-color: var(--cs-border-mid);
+    transform: translateY(-2px);
+}
+
+.family-card:active {
+    transform: translateY(0) scale(0.99);
+}
+
+.family-card:focus-visible {
+    outline: none;
+    box-shadow: var(--cs-ring);
+}
+
+.family-card__top {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 2px;
 }
 
 /* ── RESPONSIVE ─────────────────────────────────────────────────── */

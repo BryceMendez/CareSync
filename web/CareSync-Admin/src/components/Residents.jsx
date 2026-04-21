@@ -435,6 +435,7 @@ export default function Residents() {
     const [editTarget, setEditTarget] = useState(null);
     const [removeTarget, setRemoveTarget] = useState(null);
     const [toast, setToast] = useState(null);
+    const [view, setView] = useState("list");
 
     const showToast = useCallback((msg, color = C.green) => {
         setToast({ msg, color });
@@ -561,6 +562,29 @@ export default function Residents() {
                                 ✕
                             </button>
                         )}
+                        <span className="cs-search__divider" />
+                        <div className="cs-search__views" role="group" aria-label="View mode">
+                            <button
+                                type="button"
+                                className={`cs-search__view-btn ${view === "grid" ? "cs-search__view-btn--active" : ""}`}
+                                onClick={() => setView("grid")}
+                                aria-pressed={view === "grid"}
+                                title="Grid view"
+                            >
+                                <span className="cs-search__view-icon">⊞</span>
+                                Grid
+                            </button>
+                            <button
+                                type="button"
+                                className={`cs-search__view-btn ${view === "list" ? "cs-search__view-btn--active" : ""}`}
+                                onClick={() => setView("list")}
+                                aria-pressed={view === "list"}
+                                title="List view"
+                            >
+                                <span className="cs-search__view-icon">☰</span>
+                                List
+                            </button>
+                        </div>
                     </div>
 
                     {/* Wing filter */}
@@ -611,60 +635,75 @@ export default function Residents() {
                 </div>
             </Card>
 
-            {/* ── Table ── */}
-            <Card p="0">
-                <div style={{ overflowX: "auto" }}>
-                    <table className="res-table">
-                        <thead>
-                            <tr>
-                                {[
-                                    "ID",
-                                    "Resident",
-                                    "Room · Wing",
-                                    "Condition",
-                                    "Caregiver",
-                                    "Mobility",
-                                    "Diet",
-                                    "Admitted",
-                                    "Alerts",
-                                    "",
-                                ].map((h) => (
-                                    <th key={h}>{h}</th>
-                                ))}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {filtered.map((r) => (
-                                <ResidentRow
-                                    key={r.id}
-                                    r={r}
-                                    onEdit={setEditTarget}
-                                    onRemove={setRemoveTarget}
-                                />
-                            ))}
-                        </tbody>
-                    </table>
-
-                    {filtered.length === 0 && (
-                        <div className="res-empty">
-                            <div className="res-empty__icon">🔍</div>
-                            <div className="res-empty__text">
-                                No residents match your search or filters.
+            {/* ── Grid / Table ── */}
+            {view === "grid" ? (
+                <div className="res-grid">
+                    {filtered.map((r) => (
+                        <div
+                            key={r.id}
+                            className="res-card"
+                            style={{ borderTop: `3px solid ${COND_COLOR(r.condition)}` }}
+                        >
+                            <div className="res-card__top">
+                                <Avatar name={r.name} size={40} color={COND_COLOR(r.condition)} />
+                                <div style={{ flex: 1, minWidth: 0 }}>
+                                    <div style={{ fontSize: 13, fontWeight: 800, color: C.text }}>{r.name}</div>
+                                    <div style={{ fontSize: 11, color: C.textMuted, fontFamily: F.mono }}>{r.id} · Age {r.age}</div>
+                                </div>
+                                {r.alerts > 0 && (
+                                    <div className="res-card__alert">{r.alerts}</div>
+                                )}
                             </div>
-                            <button
-                                className="res-empty__reset"
-                                onClick={() => {
-                                    setSearch("");
-                                    setWingFilter("All Wings");
-                                    setCondFilter("All Conditions");
-                                }}
-                            >
-                                Clear filters
-                            </button>
+                            <div style={{ display: "flex", gap: 5, flexWrap: "wrap", margin: "8px 0 6px" }}>
+                                <Badge color={COND_COLOR(r.condition)} style={{ fontSize: 9 }}>{r.condition}</Badge>
+                                <Badge color={C.blue500} style={{ fontSize: 9 }}>{MOBILITY_ICON(r.mobility)} {r.mobility}</Badge>
+                            </div>
+                            <div style={{ fontSize: 11, color: C.textSec, display: "flex", flexDirection: "column", gap: 2 }}>
+                                <span><span style={{ color: C.textMuted }}>Room:</span> {r.room} · {r.wing} Wing</span>
+                                <span><span style={{ color: C.textMuted }}>Caregiver:</span> {r.caregiver}</span>
+                                <span><span style={{ color: C.textMuted }}>Diet:</span> {r.diet}</span>
+                            </div>
+                            <div style={{ display: "flex", gap: 4, marginTop: 10 }}>
+                                <button className="res-table__btn res-table__btn--edit" onClick={() => setEditTarget(r)}>✏️ Edit</button>
+                                <button className="res-table__btn res-table__btn--remove" onClick={() => setRemoveTarget(r)}>🗑 Remove</button>
+                            </div>
+                        </div>
+                    ))}
+                    {filtered.length === 0 && (
+                        <div className="res-empty" style={{ gridColumn: "1/-1" }}>
+                            <div className="res-empty__icon">🔍</div>
+                            <div className="res-empty__text">No residents match your search or filters.</div>
+                            <button className="res-empty__reset" onClick={() => { setSearch(""); setWingFilter("All Wings"); setCondFilter("All Conditions"); }}>Clear filters</button>
                         </div>
                     )}
                 </div>
-            </Card>
+            ) : (
+                <Card p="0">
+                    <div style={{ overflowX: "auto" }}>
+                        <table className="res-table">
+                            <thead>
+                                <tr>
+                                    {["ID", "Resident", "Room · Wing", "Condition", "Caregiver", "Mobility", "Diet", "Admitted", "Alerts", ""].map((h) => (
+                                        <th key={h}>{h}</th>
+                                    ))}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {filtered.map((r) => (
+                                    <ResidentRow key={r.id} r={r} onEdit={setEditTarget} onRemove={setRemoveTarget} />
+                                ))}
+                            </tbody>
+                        </table>
+                        {filtered.length === 0 && (
+                            <div className="res-empty">
+                                <div className="res-empty__icon">🔍</div>
+                                <div className="res-empty__text">No residents match your search or filters.</div>
+                                <button className="res-empty__reset" onClick={() => { setSearch(""); setWingFilter("All Wings"); setCondFilter("All Conditions"); }}>Clear filters</button>
+                            </div>
+                        )}
+                    </div>
+                </Card>
+            )}
 
             {/* ── Modals ── */}
             {editTarget && (

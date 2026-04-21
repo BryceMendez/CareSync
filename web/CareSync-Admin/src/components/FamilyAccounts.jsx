@@ -533,6 +533,7 @@ export default function FamilyAccounts() {
     const [statusFilter, setStatusFilter] = useState("All");
     const [selectedFamily, setSelectedFamily] = useState(null);
     const [showInviteModal, setShowInviteModal] = useState(false);
+    const [view, setView] = useState("list");
 
     const filtered = useMemo(() => {
         let list = [...families];
@@ -655,6 +656,29 @@ export default function FamilyAccounts() {
                                 ✕
                             </button>
                         )}
+                        <span className="cs-search__divider" />
+                        <div className="cs-search__views" role="group" aria-label="View mode">
+                            <button
+                                type="button"
+                                className={`cs-search__view-btn ${view === "grid" ? "cs-search__view-btn--active" : ""}`}
+                                onClick={() => setView("grid")}
+                                aria-pressed={view === "grid"}
+                                title="Grid view"
+                            >
+                                <span className="cs-search__view-icon">⊞</span>
+                                Grid
+                            </button>
+                            <button
+                                type="button"
+                                className={`cs-search__view-btn ${view === "list" ? "cs-search__view-btn--active" : ""}`}
+                                onClick={() => setView("list")}
+                                aria-pressed={view === "list"}
+                                title="List view"
+                            >
+                                <span className="cs-search__view-icon">☰</span>
+                                List
+                            </button>
+                        </div>
                     </div>
                     <select
                         className="cs-filter-select"
@@ -679,119 +703,85 @@ export default function FamilyAccounts() {
                 </div>
             </Card>
 
-            {/* Family list — full width, each row opens detail modal */}
-            <Card p="0">
-                {filtered.map((f, i) => (
-                    <div
-                        key={f.id}
-                        className="family-row"
-                        style={{
-                            borderBottom:
-                                i < filtered.length - 1
-                                    ? `1px solid ${C.border}`
-                                    : "none",
-                        }}
-                        onClick={() => setSelectedFamily(f)}
-                    >
+            {/* Family grid / list */}
+            {view === "grid" ? (
+                <div className="family-grid">
+                    {filtered.map((f) => (
                         <div
-                            style={{
-                                display: "flex",
-                                alignItems: "center",
-                                gap: 12,
-                                flex: 1,
-                            }}
+                            key={f.id}
+                            className="family-card"
+                            style={{ borderTop: `3px solid ${f.linked ? COND_COLOR(f.status) : C.textMuted}` }}
+                            onClick={() => setSelectedFamily(f)}
                         >
-                            <Avatar
-                                name={f.resident}
-                                size={38}
-                                color={f.linked ? C.blue600 : C.textMuted}
-                            />
-                            <div>
-                                <div
-                                    style={{
-                                        fontSize: 13,
-                                        fontWeight: 700,
-                                        color: C.text,
-                                    }}
-                                >
-                                    {f.familyName}
-                                </div>
-                                <div
-                                    style={{ fontSize: 11, color: C.textMuted }}
-                                >
-                                    Resident:{" "}
-                                    <span
-                                        style={{
-                                            color: C.textSec,
-                                            fontWeight: 600,
-                                        }}
-                                    >
-                                        {f.resident}
-                                    </span>{" "}
-                                    · Room {f.room} · {f.wing}
-                                </div>
-                                <div
-                                    style={{
-                                        fontSize: 11,
-                                        color: C.textMuted,
-                                        marginTop: 2,
-                                    }}
-                                >
-                                    {f.members.length > 0
-                                        ? `${f.members.length} member${f.members.length > 1 ? "s" : ""}`
-                                        : "No members linked"}
-                                    {f.members.find((m) =>
-                                        m.lastLogin.startsWith("Today"),
-                                    ) && (
-                                        <span
-                                            style={{
-                                                color: C.green,
-                                                marginLeft: 6,
-                                            }}
-                                        >
-                                            ● Active today
-                                        </span>
-                                    )}
+                            <div className="family-card__top">
+                                <Avatar name={f.resident} size={40} color={f.linked ? C.blue600 : C.textMuted} />
+                                <div style={{ flex: 1, minWidth: 0 }}>
+                                    <div style={{ fontSize: 13, fontWeight: 800, color: C.text }}>{f.familyName}</div>
+                                    <div style={{ fontSize: 10, color: C.textMuted, fontFamily: F.mono }}>{f.id}</div>
                                 </div>
                             </div>
+                            <div style={{ display: "flex", gap: 5, flexWrap: "wrap", margin: "8px 0 6px" }}>
+                                <Badge color={COND_COLOR(f.status)} style={{ fontSize: 9 }}>{f.status}</Badge>
+                                <Badge color={C.blue500} style={{ fontSize: 9 }}>{f.accessLevel} Access</Badge>
+                                {!f.linked && <Badge color={C.amber} style={{ fontSize: 9 }}>Unlinked</Badge>}
+                            </div>
+                            <div style={{ fontSize: 11, color: C.textSec, display: "flex", flexDirection: "column", gap: 2 }}>
+                                <span><span style={{ color: C.textMuted }}>Resident:</span> {f.resident}</span>
+                                <span><span style={{ color: C.textMuted }}>Room:</span> {f.room} · {f.wing} Wing</span>
+                                <span>
+                                    <span style={{ color: C.textMuted }}>Members:</span>{" "}
+                                    {f.members.length > 0 ? f.members.length : "None linked"}
+                                    {f.members.find((m) => m.lastLogin.startsWith("Today")) && (
+                                        <span style={{ color: C.green, marginLeft: 6 }}>● Active today</span>
+                                    )}
+                                </span>
+                            </div>
                         </div>
+                    ))}
+                    {filtered.length === 0 && (
+                        <div style={{ gridColumn: "1/-1", padding: 40, textAlign: "center", color: C.textMuted, fontSize: 13 }}>
+                            No family accounts match your filters.
+                        </div>
+                    )}
+                </div>
+            ) : (
+                <Card p="0">
+                    {filtered.map((f, i) => (
                         <div
-                            style={{
-                                display: "flex",
-                                gap: 8,
-                                alignItems: "center",
-                            }}
+                            key={f.id}
+                            className="family-row"
+                            style={{ borderBottom: i < filtered.length - 1 ? `1px solid ${C.border}` : "none" }}
+                            onClick={() => setSelectedFamily(f)}
                         >
-                            {!f.linked && (
-                                <Badge color={C.amber} style={{ fontSize: 9 }}>
-                                    Unlinked
-                                </Badge>
-                            )}
-                            <Badge
-                                color={COND_COLOR(f.status)}
-                                style={{ fontSize: 9 }}
-                            >
-                                {f.status}
-                            </Badge>
-                            <Badge color={C.blue500} style={{ fontSize: 9 }}>
-                                {f.accessLevel}
-                            </Badge>
+                            <div style={{ display: "flex", alignItems: "center", gap: 12, flex: 1 }}>
+                                <Avatar name={f.resident} size={38} color={f.linked ? C.blue600 : C.textMuted} />
+                                <div>
+                                    <div style={{ fontSize: 13, fontWeight: 700, color: C.text }}>{f.familyName}</div>
+                                    <div style={{ fontSize: 11, color: C.textMuted }}>
+                                        Resident: <span style={{ color: C.textSec, fontWeight: 600 }}>{f.resident}</span> · Room {f.room} · {f.wing}
+                                    </div>
+                                    <div style={{ fontSize: 11, color: C.textMuted, marginTop: 2 }}>
+                                        {f.members.length > 0 ? `${f.members.length} member${f.members.length > 1 ? "s" : ""}` : "No members linked"}
+                                        {f.members.find((m) => m.lastLogin.startsWith("Today")) && (
+                                            <span style={{ color: C.green, marginLeft: 6 }}>● Active today</span>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                            <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                                {!f.linked && <Badge color={C.amber} style={{ fontSize: 9 }}>Unlinked</Badge>}
+                                <Badge color={COND_COLOR(f.status)} style={{ fontSize: 9 }}>{f.status}</Badge>
+                                <Badge color={C.blue500} style={{ fontSize: 9 }}>{f.accessLevel}</Badge>
+                            </div>
                         </div>
-                    </div>
-                ))}
-                {filtered.length === 0 && (
-                    <div
-                        style={{
-                            padding: 40,
-                            textAlign: "center",
-                            color: C.textMuted,
-                            fontSize: 13,
-                        }}
-                    >
-                        No family accounts match your filters.
-                    </div>
-                )}
-            </Card>
+                    ))}
+                    {filtered.length === 0 && (
+                        <div style={{ padding: 40, textAlign: "center", color: C.textMuted, fontSize: 13 }}>
+                            No family accounts match your filters.
+                        </div>
+                    )}
+                </Card>
+            )}
 
             {/* Family detail modal — portal onto document.body */}
             {selectedFamily && (

@@ -336,6 +336,7 @@ export default function StaffCaregivers() {
     const [statusFilter, setStatusFilter] = useState("All Statuses");
     const [search, setSearch] = useState("");
     const [selected, setSelected] = useState(null);
+    const [view, setView] = useState("grid");
 
     const filtered = useMemo(() => {
         let list = [...staff];
@@ -446,6 +447,29 @@ export default function StaffCaregivers() {
                                 ✕
                             </button>
                         )}
+                        <span className="cs-search__divider" />
+                        <div className="cs-search__views" role="group" aria-label="View mode">
+                            <button
+                                type="button"
+                                className={`cs-search__view-btn ${view === "grid" ? "cs-search__view-btn--active" : ""}`}
+                                onClick={() => setView("grid")}
+                                aria-pressed={view === "grid"}
+                                title="Grid view"
+                            >
+                                <span className="cs-search__view-icon">⊞</span>
+                                Grid
+                            </button>
+                            <button
+                                type="button"
+                                className={`cs-search__view-btn ${view === "list" ? "cs-search__view-btn--active" : ""}`}
+                                onClick={() => setView("list")}
+                                aria-pressed={view === "list"}
+                                title="List view"
+                            >
+                                <span className="cs-search__view-icon">☰</span>
+                                List
+                            </button>
+                        </div>
                     </div>
                     {[
                         { val: roleFilter, set: setRoleFilter, opts: ROLES },
@@ -477,126 +501,103 @@ export default function StaffCaregivers() {
                 </div>
             </Card>
 
-            {/* Staff grid */}
-            <div className="staff-grid">
-                {filtered.map((s) => (
-                    <div
-                        key={s.id}
-                        className="staff-card"
-                        onClick={() => setSelected(s)}
-                        style={{
-                            borderTop: `3px solid ${STATUS_COLOR(s.status)}`,
-                        }}
-                    >
-                        <div className="staff-card__top">
-                            <div
-                                style={{ position: "relative", flexShrink: 0 }}
-                            >
-                                <Avatar
-                                    name={s.name}
-                                    size={44}
-                                    color={ROLE_COLOR(s.role)}
-                                />
-                                <div
-                                    className="staff-card__status-dot"
-                                    style={{
-                                        background: STATUS_COLOR(s.status),
-                                    }}
-                                />
-                            </div>
-                            <div style={{ flex: 1, minWidth: 0 }}>
-                                <div
-                                    style={{
-                                        fontSize: 13,
-                                        fontWeight: 800,
-                                        color: C.text,
-                                        marginBottom: 4,
-                                    }}
-                                >
-                                    {s.name}
-                                </div>
-                                <div
-                                    style={{
-                                        display: "flex",
-                                        gap: 5,
-                                        flexWrap: "wrap",
-                                    }}
-                                >
-                                    <Badge
-                                        color={ROLE_COLOR(s.role)}
-                                        style={{ fontSize: 9 }}
-                                    >
-                                        {s.role}
-                                    </Badge>
-                                    <Badge
-                                        color={STATUS_COLOR(s.status)}
-                                        style={{ fontSize: 9 }}
-                                    >
-                                        {STATUS_LABEL(s.status)}
-                                    </Badge>
-                                </div>
-                            </div>
-                            {s.alerts > 0 && (
-                                <div className="staff-card__alert">
-                                    {s.alerts}
-                                </div>
-                            )}
-                        </div>
+            {/* Staff grid / list */}
+            {view === "grid" ? (
+                <div className="staff-grid">
+                    {filtered.map((s) => (
                         <div
-                            style={{
-                                marginTop: 10,
-                                display: "flex",
-                                flexDirection: "column",
-                                gap: 3,
-                            }}
+                            key={s.id}
+                            className="staff-card"
+                            onClick={() => setSelected(s)}
+                            style={{ borderTop: `3px solid ${STATUS_COLOR(s.status)}` }}
                         >
-                            <div style={{ fontSize: 11, color: C.textSec }}>
-                                <span style={{ color: C.textMuted }}>
-                                    Wing:{" "}
-                                </span>
-                                {s.wing}
+                            <div className="staff-card__top">
+                                <div style={{ position: "relative", flexShrink: 0 }}>
+                                    <Avatar name={s.name} size={44} color={ROLE_COLOR(s.role)} />
+                                    <div className="staff-card__status-dot" style={{ background: STATUS_COLOR(s.status) }} />
+                                </div>
+                                <div style={{ flex: 1, minWidth: 0 }}>
+                                    <div style={{ fontSize: 13, fontWeight: 800, color: C.text, marginBottom: 4 }}>{s.name}</div>
+                                    <div style={{ display: "flex", gap: 5, flexWrap: "wrap" }}>
+                                        <Badge color={ROLE_COLOR(s.role)} style={{ fontSize: 9 }}>{s.role}</Badge>
+                                        <Badge color={STATUS_COLOR(s.status)} style={{ fontSize: 9 }}>{STATUS_LABEL(s.status)}</Badge>
+                                    </div>
+                                </div>
+                                {s.alerts > 0 && <div className="staff-card__alert">{s.alerts}</div>}
                             </div>
-                            <div style={{ fontSize: 11, color: C.textSec }}>
-                                <span style={{ color: C.textMuted }}>
-                                    Shift:{" "}
-                                </span>
-                                {s.shift}
-                            </div>
-                            <div style={{ fontSize: 11, color: C.textSec }}>
-                                <span style={{ color: C.textMuted }}>
-                                    Residents:{" "}
-                                </span>
-                                {s.residents.length > 0
-                                    ? s.residents.length
-                                    : "—"}
-                            </div>
-                            <div
-                                style={{
-                                    fontSize: 10,
-                                    color: C.textMuted,
-                                    marginTop: 2,
-                                }}
-                            >
-                                Last seen: {s.lastSeen}
+                            <div style={{ marginTop: 10, display: "flex", flexDirection: "column", gap: 3 }}>
+                                <div style={{ fontSize: 11, color: C.textSec }}><span style={{ color: C.textMuted }}>Wing: </span>{s.wing}</div>
+                                <div style={{ fontSize: 11, color: C.textSec }}><span style={{ color: C.textMuted }}>Shift: </span>{s.shift}</div>
+                                <div style={{ fontSize: 11, color: C.textSec }}><span style={{ color: C.textMuted }}>Residents: </span>{s.residents.length > 0 ? s.residents.length : "—"}</div>
+                                <div style={{ fontSize: 10, color: C.textMuted, marginTop: 2 }}>Last seen: {s.lastSeen}</div>
                             </div>
                         </div>
+                    ))}
+                    {filtered.length === 0 && (
+                        <div style={{ gridColumn: "1/-1", padding: 40, textAlign: "center", color: C.textMuted, fontSize: 13 }}>
+                            No staff members match your filters.
+                        </div>
+                    )}
+                </div>
+            ) : (
+                <Card p="0">
+                    <div style={{ overflowX: "auto" }}>
+                        <table className="staff-table">
+                            <thead>
+                                <tr>
+                                    {["Staff Member", "Role", "Wing", "Shift", "Status", "Residents", "Last Seen", "Alerts", ""].map((h) => (
+                                        <th key={h}>{h}</th>
+                                    ))}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {filtered.map((s) => (
+                                    <tr
+                                        key={s.id}
+                                        className="staff-table__row"
+                                        onClick={() => setSelected(s)}
+                                    >
+                                        <td>
+                                            <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
+                                                <div style={{ position: "relative", flexShrink: 0 }}>
+                                                    <Avatar name={s.name} size={30} color={ROLE_COLOR(s.role)} />
+                                                    <div style={{ position: "absolute", bottom: 1, right: 1, width: 8, height: 8, borderRadius: "50%", background: STATUS_COLOR(s.status), border: "1.5px solid #fff" }} />
+                                                </div>
+                                                <div>
+                                                    <div style={{ fontSize: 12, fontWeight: 700, color: C.text }}>{s.name}</div>
+                                                    <div style={{ fontSize: 10, color: C.textMuted, fontFamily: F.mono }}>{s.id}</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><Badge color={ROLE_COLOR(s.role)} style={{ fontSize: 9 }}>{s.role}</Badge></td>
+                                        <td style={{ fontSize: 11, color: C.textSec }}>{s.wing}</td>
+                                        <td style={{ fontSize: 11, color: C.textSec }}>{s.shift}</td>
+                                        <td><Badge color={STATUS_COLOR(s.status)} style={{ fontSize: 9 }}>{STATUS_LABEL(s.status)}</Badge></td>
+                                        <td style={{ fontSize: 11, color: C.textSec }}>{s.residents.length > 0 ? s.residents.length : "—"}</td>
+                                        <td style={{ fontSize: 11, color: C.textMuted }}>{s.lastSeen}</td>
+                                        <td>
+                                            {s.alerts > 0
+                                                ? <Badge color={C.red} style={{ fontSize: 9 }}>🔔 {s.alerts}</Badge>
+                                                : <span style={{ fontSize: 11, color: C.textMuted }}>—</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            <button className="staff-table__btn" onClick={(e) => { e.stopPropagation(); setSelected(s); }}>
+                                                Profile
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                        {filtered.length === 0 && (
+                            <div style={{ padding: 40, textAlign: "center", color: C.textMuted, fontSize: 13 }}>
+                                No staff members match your filters.
+                            </div>
+                        )}
                     </div>
-                ))}
-
-                {filtered.length === 0 && (
-                    <div
-                        style={{
-                            gridColumn: "1/-1",
-                            padding: 40,
-                            textAlign: "center",
-                            color: C.textMuted,
-                            fontSize: 13,
-                        }}
-                    >
-                        No staff members match your filters.
-                    </div>
-                )}
-            </div>
+                </Card>
+            )}
 
             {/* Profile modal — rendered via portal onto document.body */}
             {selected && (

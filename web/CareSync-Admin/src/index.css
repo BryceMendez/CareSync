@@ -42,6 +42,33 @@
 
   --cs-ring: 0 0 0 4px rgba(37, 99, 235, 0.12);
   --cs-ease: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Status soft backgrounds & borders */
+  --cs-red-soft: #fef2f2;
+  --cs-red-border: #fecaca;
+  --cs-amber-soft: #fffbeb;
+  --cs-amber-border: #fde68a;
+  --cs-green-soft: #ecfdf5;
+  --cs-green-border: #a7f3d0;
+  --cs-purple: #8b5cf6;
+  --cs-purple-soft: #f5f3ff;
+  --cs-purple-border: #ddd6fe;
+  --cs-teal: #0891b2;
+  --cs-teal-soft: #ecfeff;
+  --cs-teal-border: #a5f3fc;
+
+  /* Animation durations */
+  --cs-duration: 0.15s;
+  --cs-duration-md: 0.25s;
+
+  /* Extra radius step */
+  --cs-radius-xs: 4px;
+
+  /* Z-index layers */
+  --z-topbar: 10;
+  --z-overlay: 40;
+  --z-sidebar: 50;
+  --z-modal: 1000;
 }
 
 /* ── GLOBAL RESET ─────────────────────────────────────────────────── */
@@ -60,9 +87,9 @@ html {
 }
 
 body {
-  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
-  background: #f0f6ff;
-  color: #0f172a;
+  font-family: var(--cs-font);
+  background: var(--cs-bg);
+  color: var(--cs-text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
@@ -77,7 +104,7 @@ input,
 select,
 textarea,
 button {
-  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  font-family: var(--cs-font);
   color-scheme: light;
 }
 
@@ -86,12 +113,17 @@ button {
 }
 
 a {
-  color: #2563eb;
+  color: var(--cs-primary);
   text-decoration: none;
 }
 
 a:hover {
   text-decoration: underline;
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--cs-ring);
 }
 
 /* ── SCROLLBARS ───────────────────────────────────────────────────── */
@@ -101,11 +133,11 @@ a:hover {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f0f6ff;
+  background: var(--cs-bg);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #bfdbfe;
+  background: var(--cs-primary-200);
   border-radius: 3px;
 }
 
@@ -140,6 +172,44 @@ a:hover {
     opacity: 1;
     transform: translateX(0);
   }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+}
+
+@keyframes dotPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5); }
+  50%       { box-shadow: 0 0 0 4px rgba(16, 185, 129, 0); }
 }
 
 /* ── UNIFIED TOOLBAR (search + add) ──────────────────────────────── */

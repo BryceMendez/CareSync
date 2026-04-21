@@ -1,0 +1,130 @@
+/* ── BUTTON ────────────────────────────────────────────────────────── */
+.cs-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border-radius: 8px;
+    font-family: var(--cs-font);
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    white-space: nowrap;
+    transition: transform var(--cs-duration) var(--cs-ease),
+                box-shadow var(--cs-duration) var(--cs-ease),
+                filter var(--cs-duration) var(--cs-ease),
+                background var(--cs-duration) var(--cs-ease),
+                border-color var(--cs-duration) var(--cs-ease),
+                color var(--cs-duration) var(--cs-ease);
+}
+
+/* Sizes */
+.cs-btn--sm { padding: 5px 13px; font-size: 12px; }
+.cs-btn--md { padding: 8px 18px; font-size: 13px; }
+.cs-btn--lg { padding: 11px 28px; font-size: 14px; }
+
+/* Primary */
+.cs-btn--primary {
+    background: linear-gradient(135deg, var(--cs-primary), var(--cs-primary-hov));
+    color: #ffffff;
+    border: none;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+}
+.cs-btn--primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.42);
+    filter: brightness(1.06);
+}
+.cs-btn--primary:active {
+    transform: translateY(0) scale(0.98);
+    box-shadow: 0 1px 4px rgba(37, 99, 235, 0.25);
+    filter: brightness(0.97);
+}
+
+/* Secondary */
+.cs-btn--secondary {
+    background: var(--cs-surface);
+    color: var(--cs-text-sec);
+    border: 1px solid var(--cs-border);
+}
+.cs-btn--secondary:hover {
+    background: var(--cs-bg);
+    border-color: var(--cs-border-mid);
+    color: var(--cs-text);
+    box-shadow: var(--cs-shadow-xs);
+}
+.cs-btn--secondary:active {
+    transform: scale(0.98);
+    background: var(--cs-primary-50);
+}
+
+/* Danger */
+.cs-btn--danger {
+    background: var(--cs-red-soft);
+    color: var(--cs-red);
+    border: 1px solid var(--cs-red-border);
+}
+.cs-btn--danger:hover {
+    background: #fde8e8;
+    border-color: var(--cs-red);
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.18);
+}
+.cs-btn--danger:active {
+    transform: scale(0.98);
+    background: #fcd9d9;
+}
+
+/* Ghost */
+.cs-btn--ghost {
+    background: transparent;
+    color: var(--cs-primary);
+    border: 1px solid var(--cs-primary-200);
+}
+.cs-btn--ghost:hover {
+    background: var(--cs-primary-50);
+    border-color: var(--cs-primary-300);
+    box-shadow: var(--cs-shadow-xs);
+}
+.cs-btn--ghost:active {
+    transform: scale(0.98);
+    background: var(--cs-primary-100);
+}
+
+/* Success */
+.cs-btn--success {
+    background: var(--cs-green-soft);
+    color: var(--cs-green);
+    border: 1px solid var(--cs-green-border);
+}
+.cs-btn--success:hover {
+    background: #d1fae5;
+    border-color: var(--cs-green);
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.18);
+}
+.cs-btn--success:active {
+    transform: scale(0.98);
+    background: #a7f3d0;
+}
+
+/* Focus ring for all buttons */
+.cs-btn:focus-visible {
+    outline: none;
+    box-shadow: var(--cs-ring);
+}
+.cs-btn--danger:focus-visible {
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15);
+}
+.cs-btn--success:focus-visible {
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+}
+
+/* ── MODAL ANIMATION ──────────────────────────────────────────────── */
+.cs-modal__content {
+    animation: scaleIn 0.22s var(--cs-ease) both;
+}
+
+/* ── CARD HOVER ───────────────────────────────────────────────────── */
+.cs-card--hover:hover {
+    box-shadow: var(--cs-shadow-md);
+    border-color: var(--cs-border-mid);
+}

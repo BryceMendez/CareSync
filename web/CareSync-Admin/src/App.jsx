@@ -22,7 +22,7 @@ import BuildingModel from "./components/BuildingModel";
 import "./App.css";
 
 // ── TOP BAR ────────────────────────────────────────────────────────
-function TopBar({ title, sub, onMenuToggle }) {
+function TopBar({ title, sub, onMenuToggle, sidebarOpen }) {
     const [timeStr, setTimeStr] = useState("");
 
     useEffect(() => {
@@ -46,7 +46,11 @@ function TopBar({ title, sub, onMenuToggle }) {
         <div className="topbar">
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                 {/* Hamburger — only visible on mobile via CSS */}
-                <button className="topbar__hamburger" onClick={onMenuToggle}>
+                <button
+                    className={`topbar__hamburger${sidebarOpen ? " topbar__hamburger--open" : ""}`}
+                    onClick={onMenuToggle}
+                    aria-label={sidebarOpen ? "Close menu" : "Open menu"}
+                >
                     <span /><span /><span />
                 </button>
                 <div className="topbar__left">
@@ -137,6 +141,7 @@ export default function App() {
                     title={PAGE_TITLE[page]}
                     sub={PAGE_SUB[page]}
                     onMenuToggle={() => setSidebarOpen((p) => !p)}
+                    sidebarOpen={sidebarOpen}
                 />
                 <div className="app-content">{PAGE_MAP[page]}</div>
             </div>

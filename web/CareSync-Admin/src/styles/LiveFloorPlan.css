@@ -401,15 +401,7 @@
     justify-content: center;
     z-index: 1000;
     padding: 16px;
-    animation: overlayFadeIn 0.18s var(--cs-ease);
-}
-@keyframes overlayFadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+    animation: fadeIn 0.18s var(--cs-ease);
 }
 .room-modal {
     background: var(--cs-surface);
@@ -487,10 +479,17 @@
     line-height: 1;
 }
 .room-modal__close:hover {
-    background: #fef2f2;
+    background: var(--cs-red-soft);
     color: var(--cs-red);
-    border-color: #fecaca;
+    border-color: var(--cs-red-border);
     transform: rotate(90deg);
+}
+.room-modal__close:active {
+    transform: rotate(90deg) scale(0.92);
+}
+.room-modal__close:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15);
 }
 .room-modal__body {
     padding: 22px 24px;

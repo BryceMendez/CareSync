@@ -1,4 +1,5 @@
 import { C, F } from "../constants";
+import "../styles/UI.css";
 
 // ── BADGE ──────────────────────────────────────────────────────────
 export const Badge = ({
@@ -36,62 +37,20 @@ export const Btn = ({
     size = "md",
     onClick,
     style = {},
-}) => {
-    const sz = {
-        sm: { padding: "5px 13px", fontSize: 12 },
-        md: { padding: "8px 18px", fontSize: 13 },
-        lg: { padding: "11px 28px", fontSize: 14 },
-    };
-    const v = {
-        primary: {
-            background: `linear-gradient(135deg, ${C.blue600}, ${C.blue700})`,
-            color: "#fff",
-            border: "none",
-            boxShadow: `0 2px 8px ${C.blue600}40`,
-        },
-        secondary: {
-            background: C.surface,
-            color: C.textSec,
-            border: `1px solid ${C.border}`,
-        },
-        danger: {
-            background: C.redSoft,
-            color: C.red,
-            border: `1px solid ${C.redBorder}`,
-        },
-        ghost: {
-            background: "transparent",
-            color: C.blue600,
-            border: `1px solid ${C.blue200}`,
-        },
-        success: {
-            background: C.greenSoft,
-            color: C.green,
-            border: `1px solid ${C.greenBorder}`,
-        },
-    };
-    return (
-        <button
-            onClick={onClick}
-            style={{
-                ...sz[size],
-                ...v[variant],
-                borderRadius: 8,
-                fontFamily: F.body,
-                fontWeight: 600,
-                cursor: "pointer",
-                transition: "all 0.15s",
-                ...style,
-            }}
-        >
-            {children}
-        </button>
-    );
-};
+}) => (
+    <button
+        onClick={onClick}
+        className={`cs-btn cs-btn--${variant} cs-btn--${size}`}
+        style={style}
+    >
+        {children}
+    </button>
+);
 
 // ── CARD ───────────────────────────────────────────────────────────
 export const Card = ({ children, style = {}, p = "20px", hover = false }) => (
     <div
+        className={hover ? "cs-card--hover" : undefined}
         style={{
             background: C.surface,
             borderRadius: 14,
@@ -101,7 +60,7 @@ export const Card = ({ children, style = {}, p = "20px", hover = false }) => (
             padding: p,
             overflow: "hidden",
             transition: hover
-                ? "box-shadow 0.2s, border-color 0.2s"
+                ? "box-shadow 0.2s var(--cs-ease), border-color 0.2s var(--cs-ease)"
                 : undefined,
             ...style,
         }}
@@ -127,12 +86,20 @@ export const SectionHeader = ({ title, sub, action }) => (
                     fontSize: 16,
                     fontWeight: 700,
                     color: C.text,
+                    lineHeight: 1.3,
                 }}
             >
                 {title}
             </div>
             {sub && (
-                <div style={{ fontSize: 12, color: C.textMuted, marginTop: 2 }}>
+                <div
+                    style={{
+                        fontSize: 12,
+                        color: C.textMuted,
+                        marginTop: 2,
+                        lineHeight: 1.5,
+                    }}
+                >
                     {sub}
                 </div>
             )}
@@ -158,14 +125,14 @@ export const Avatar = ({ name, size = 32, color = C.blue500 }) => {
             style={{
                 width: size,
                 height: size,
-                borderRadius: size / 3,
+                borderRadius: Math.round(size / 3),
                 background: color + "18",
                 border: `1.5px solid ${color}30`,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 fontFamily: F.body,
-                fontSize: size * 0.34,
+                fontSize: Math.round(size * 0.34),
                 fontWeight: 700,
                 color,
                 flexShrink: 0,
@@ -199,7 +166,7 @@ export const ProgressBar = ({
                 width: `${Math.min(value, 100)}%`,
                 background: color,
                 borderRadius: h,
-                transition: "width 0.6s cubic-bezier(.34,1.56,.64,1)",
+                transition: "width 0.5s var(--cs-ease)",
             }}
         />
     </div>
@@ -212,19 +179,23 @@ export const Modal = ({ title, subtitle, children, onClose, width = 560 }) => (
             position: "fixed",
             inset: 0,
             background: "rgba(15,23,42,0.35)",
+            WebkitBackdropFilter: "blur(4px)",
             backdropFilter: "blur(4px)",
-            zIndex: 999,
+            zIndex: "var(--z-modal)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            padding: "16px",
         }}
     >
         <div
+            className="cs-modal__content"
             style={{
                 background: C.surface,
                 border: `1px solid ${C.border}`,
                 borderRadius: 18,
                 width,
+                maxWidth: "100%",
                 maxHeight: "88vh",
                 overflowY: "auto",
                 boxShadow:
@@ -238,6 +209,11 @@ export const Modal = ({ title, subtitle, children, onClose, width = 560 }) => (
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "flex-start",
+                    position: "sticky",
+                    top: 0,
+                    background: C.surface,
+                    zIndex: 1,
+                    borderRadius: "18px 18px 0 0",
                 }}
             >
                 <div>
@@ -247,6 +223,7 @@ export const Modal = ({ title, subtitle, children, onClose, width = 560 }) => (
                             fontSize: 17,
                             fontWeight: 700,
                             color: C.text,
+                            lineHeight: 1.3,
                         }}
                     >
                         {title}
@@ -257,6 +234,7 @@ export const Modal = ({ title, subtitle, children, onClose, width = 560 }) => (
                                 fontSize: 12,
                                 color: C.textMuted,
                                 marginTop: 3,
+                                lineHeight: 1.5,
                             }}
                         >
                             {subtitle}
@@ -265,18 +243,16 @@ export const Modal = ({ title, subtitle, children, onClose, width = 560 }) => (
                 </div>
                 <button
                     onClick={onClose}
+                    className="cs-btn cs-btn--secondary cs-btn--sm"
                     style={{
-                        background: C.bg,
-                        border: `1px solid ${C.border}`,
                         width: 28,
                         height: 28,
+                        padding: 0,
                         borderRadius: 8,
-                        cursor: "pointer",
                         fontSize: 16,
                         color: C.textMuted,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
+                        flexShrink: 0,
+                        marginLeft: 12,
                     }}
                 >
                     ×
@@ -308,6 +284,7 @@ export const Input = ({
                     color: C.textSec,
                     letterSpacing: "0.06em",
                     marginBottom: 5,
+                    textTransform: "uppercase",
                 }}
             >
                 {label}
@@ -322,6 +299,7 @@ export const Input = ({
                         top: "50%",
                         transform: "translateY(-50%)",
                         fontSize: 14,
+                        pointerEvents: "none",
                     }}
                 >
                     {icon}
@@ -343,17 +321,24 @@ export const Input = ({
                     fontSize: 13,
                     outline: "none",
                     boxSizing: "border-box",
-                    transition: "border-color 0.15s",
+                    lineHeight: 1.5,
+                    transition: "border-color 0.15s, box-shadow 0.15s",
                 }}
-                onFocus={(e) => (e.target.style.borderColor = C.blue400)}
-                onBlur={(e) => (e.target.style.borderColor = C.border)}
+                onFocus={(e) => {
+                    e.target.style.borderColor = C.blue400;
+                    e.target.style.boxShadow = "0 0 0 4px rgba(37,99,235,0.12)";
+                }}
+                onBlur={(e) => {
+                    e.target.style.borderColor = C.border;
+                    e.target.style.boxShadow = "none";
+                }}
             />
         </div>
     </div>
 );
 
 // ── SELECT ─────────────────────────────────────────────────────────
-export const Select = ({ label, children, style = {} }) => (
+export const Select = ({ label, value, onChange, children, style = {} }) => (
     <div style={{ marginBottom: 14, ...style }}>
         {label && (
             <label
@@ -365,12 +350,15 @@ export const Select = ({ label, children, style = {} }) => (
                     color: C.textSec,
                     letterSpacing: "0.06em",
                     marginBottom: 5,
+                    textTransform: "uppercase",
                 }}
             >
                 {label}
             </label>
         )}
         <select
+            value={value}
+            onChange={onChange}
             style={{
                 width: "100%",
                 padding: "9px 12px",
@@ -381,6 +369,17 @@ export const Select = ({ label, children, style = {} }) => (
                 fontFamily: F.body,
                 fontSize: 13,
                 outline: "none",
+                lineHeight: 1.5,
+                cursor: "pointer",
+                transition: "border-color 0.15s, box-shadow 0.15s",
+            }}
+            onFocus={(e) => {
+                e.target.style.borderColor = C.blue400;
+                e.target.style.boxShadow = "0 0 0 4px rgba(37,99,235,0.12)";
+            }}
+            onBlur={(e) => {
+                e.target.style.borderColor = C.border;
+                e.target.style.boxShadow = "none";
             }}
         >
             {children}

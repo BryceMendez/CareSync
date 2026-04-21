@@ -45,6 +45,16 @@
     box-shadow: var(--cs-shadow-sm);
 }
 
+.bm-wing-chip:active {
+    transform: translateY(0) scale(0.97);
+    box-shadow: var(--cs-shadow-xs);
+}
+
+.bm-wing-chip:focus-visible {
+    outline: none;
+    box-shadow: var(--cs-ring);
+}
+
 .bm-wing-chip--active {
     transform: translateY(-1px);
 }
@@ -105,6 +115,19 @@
     border: 1.5px solid #6366f1;
     color: #c7d2fe;
     box-shadow: 0 2px 12px rgba(99, 102, 241, 0.3);
+}
+
+.bm-mode-btn:hover {
+    transform: translateY(-1px);
+}
+
+.bm-mode-btn:active {
+    transform: translateY(0) scale(0.97);
+}
+
+.bm-mode-btn:focus-visible {
+    outline: none;
+    box-shadow: var(--cs-ring);
 }
 
 .bm-mode-btn__key {

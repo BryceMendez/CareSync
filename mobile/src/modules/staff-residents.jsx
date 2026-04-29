@@ -1,16 +1,16 @@
 import React from 'react';
-import { useRouter } from 'expo-router';
+import { useNavigation } from '@react-navigation/native';
 import StaffResidentsScreen from '../src/screens/StaffResidentsScreen';
 
 export default function StaffResidents() {
-  const router = useRouter();
+  const navigation = useNavigation();
   return (
     <StaffResidentsScreen
       onNavigate={(tab) => {
-        if (tab === 'home') router.replace('/staff-home');
-        if (tab === 'alerts') router.push('/staff-alerts');
-        if (tab === 'camera') router.push('/staff-camera');
-        if (tab === 'logs') router.push('/staff-logs');
+        if (tab === 'home') navigation.replace('StaffHome');
+        if (tab === 'alerts') navigation.navigate('StaffAlerts');
+        if (tab === 'camera') navigation.navigate('StaffCamera');
+        if (tab === 'logs') navigation.navigate('StaffLogs');
       }}
     />
   );
